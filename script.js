@@ -242,6 +242,56 @@ function copyTemplate() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+//  ПРОМОКОДЫ
+// ═══════════════════════════════════════════════════════════════
+
+const PROMOCODES = [
+    { code: 'STALKER2026', uses: 10, discount: '20%' },
+    { code: 'BUNKERFREE', uses: 5, discount: '100%' },
+    { code: 'TEST', uses: 100, discount: '10%' }
+];
+
+function checkPromocode() {
+    const input = document.getElementById('promo-input');
+    const resultDiv = document.getElementById('promo-result');
+    const code = input.value.trim().toUpperCase();
+
+    if (!code) {
+        resultDiv.textContent = 'Введите промокод!';
+        resultDiv.style.color = '#ff6b6b';
+        return;
+    }
+
+    const promo = PROMOCODES.find(p => p.code === code);
+
+    if (promo) {
+        if (promo.uses > 0) {
+            promo.uses--; // Уменьшаем количество использований
+            resultDiv.textContent = `✅ Промокод "${promo.code}" успешно применён! Скидка: ${promo.discount} (осталось использований: ${promo.uses})`;
+            resultDiv.style.color = '#4caf50';
+            
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.notificationOccurred('success');
+            }
+        } else {
+            resultDiv.textContent = '❌ Промокод больше не действителен (лимит исчерпан).';
+            resultDiv.style.color = '#ff6b6b';
+            
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.notificationOccurred('error');
+            }
+        }
+    } else {
+        resultDiv.textContent = '❌ Неверный промокод.';
+        resultDiv.style.color = '#ff6b6b';
+        
+        if (tg.HapticFeedback) {
+            tg.HapticFeedback.notificationOccurred('error');
+        }
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  ИНИЦИАЛИЗАЦИЯ
 // ═══════════════════════════════════════════════════════════════
 
