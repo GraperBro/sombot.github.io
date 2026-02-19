@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Магазин координат</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app" id="app">
+
+        <!-- ══════ Главное меню ══════ -->
+        <div class="page active" id="page-main">
+            <div class="header">
+                <h1>🏪 Магазин координат</h1>
+                <p class="subtitle">Выбери раздел</p>
+            </div>
+            <div class="menu-list">
+                <button class="menu-btn" onclick="showPage('page-coords')">
+                    <span class="menu-icon">📍</span>
+                    <span class="menu-text">Корды</span>
+                    <span class="menu-arrow">›</span>
+                </button>
+                <button class="menu-btn" onclick="showPage('page-suggest')">
+                    <span class="menu-icon">📝</span>
+                    <span class="menu-text">Предложка</span>
+                    <span class="menu-arrow">›</span>
+                </button>
+                <button class="menu-btn" onclick="showPage('page-info')">
+                    <span class="menu-icon">ℹ️</span>
+                    <span class="menu-text">Информация</span>
+                    <span class="menu-arrow">›</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ══════ Корды — подменю ══════ -->
+        <div class="page" id="page-coords">
+            <div class="header">
+                <button class="back-btn" onclick="showPage('page-main')">‹ Назад</button>
+                <h1>📍 Корды</h1>
+                <p class="subtitle">Выбери категорию</p>
+            </div>
+            <div class="menu-list">
+                <button class="menu-btn" onclick="showCatalog('abandoned')">
+                    <span class="menu-icon">🏚</span>
+                    <span class="menu-text">Заброшки</span>
+                    <span class="menu-arrow">›</span>
+                </button>
+                <button class="menu-btn" onclick="showCatalog('bunkers')">
+                    <span class="menu-icon">🛡</span>
+                    <span class="menu-text">Бомбоубежища</span>
+                    <span class="menu-arrow">›</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ══════ Каталог (динамический) ══════ -->
+        <div class="page" id="page-catalog">
+            <div class="header">
+                <button class="back-btn" onclick="showPage('page-coords')">‹ Назад</button>
+                <h1 id="catalog-title">Каталог</h1>
+                <p class="subtitle" id="catalog-subtitle">Выбери объект</p>
+            </div>
+            <div class="menu-list" id="catalog-list">
+                <!-- заполняется динамически -->
+            </div>
+        </div>
+
+        <!-- ══════ Карточка объекта ══════ -->
+        <div class="page" id="page-item">
+            <div class="header">
+                <button class="back-btn" id="item-back-btn">‹ Назад</button>
+                <h1 id="item-title">Объект</h1>
+            </div>
+            <div class="item-card">
+                <div class="item-description" id="item-description"></div>
+                <div class="item-divider"></div>
+                <div class="item-prices">
+                    <div class="price-row">
+                        <span class="price-label">🗺 Корды</span>
+                        <span class="price-value" id="item-coords-price"></span>
+                    </div>
+                    <div class="price-row">
+                        <span class="price-label">📋 Фулл Инфа</span>
+                        <span class="price-value" id="item-full-price"></span>
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="buy-btn coords-buy" id="btn-buy-coords">
+                        <span>🗺 Корды</span>
+                        <span class="buy-price" id="btn-coords-price"></span>
+                    </button>
+                    <button class="buy-btn full-buy" id="btn-buy-full">
+                        <span>📋 Фулл Инфа</span>
+                        <span class="buy-price" id="btn-full-price"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════ Предложка ══════ -->
+        <div class="page" id="page-suggest">
+            <div class="header">
+                <button class="back-btn" onclick="showPage('page-main')">‹ Назад</button>
+                <h1>📝 Предложка</h1>
+                <p class="subtitle">Шаблон для отправки объекта</p>
+            </div>
+            <div class="info-card">
+                <p>Если хочешь предложить свой объект, скопируй шаблон ниже, заполни и отправь администратору:</p>
+                <div class="template-block" id="template-block">
+                    <div class="template-line"><b>1. Название объекта:</b> [Название]</div>
+                    <div class="template-line"><b>2. Краткая информация:</b> [Описание]</div>
+                    <div class="template-line"><b>3. Корды:</b> [Координаты]</div>
+                    <div class="template-line"><b>4. Цена (доп.):</b> [Цена или «Бесплатно»]</div>
+                </div>
+                <button class="copy-btn" onclick="copyTemplate()">📋 Скопировать шаблон</button>
+                <p class="contact">📩 Отправляй: <b>@ваш_username</b></p>
+            </div>
+        </div>
+
+        <!-- ══════ Информация ══════ -->
+        <div class="page" id="page-info">
+            <div class="header">
+                <button class="back-btn" onclick="showPage('page-main')">‹ Назад</button>
+                <h1>ℹ️ Информация</h1>
+            </div>
+            <div class="info-card">
+                <div class="info-row">📍 Мы продаём проверенные координаты заброшек и бомбоубежищ.</div>
+                <div class="info-row">✅ Все объекты проверены лично.</div>
+                <div class="info-row">💬 По вопросам — пишите в ЛС.</div>
+                <div class="info-divider"></div>
+                <div class="info-row contact">🔗 Контакт: <b>@ваш_username</b></div>
+            </div>
+        </div>
+
+        <!-- ══════ Страница покупки ══════ -->
+        <div class="page" id="page-buy">
+            <div class="header">
+                <button class="back-btn" id="buy-back-btn">‹ Назад</button>
+                <h1 id="buy-title">Покупка</h1>
+            </div>
+            <div class="info-card buy-card">
+                <div class="buy-icon" id="buy-icon">🗺</div>
+                <div class="buy-object" id="buy-object"></div>
+                <div class="buy-total" id="buy-total"></div>
+                <div class="buy-instruction">
+                    Для оплаты свяжись с админом:<br>
+                    <b>@ваш_username</b>
+                </div>
+                <div class="buy-code" id="buy-code"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
