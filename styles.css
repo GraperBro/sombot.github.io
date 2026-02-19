@@ -1,0 +1,408 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: var(--tg-theme-bg-color, #1a1a2e);
+    --bg-secondary: var(--tg-theme-secondary-bg-color, #16213e);
+    --text: var(--tg-theme-text-color, #e8e8f0);
+    --text-hint: var(--tg-theme-hint-color, #8888aa);
+    --link: var(--tg-theme-link-color, #e91e63);
+    --btn-bg: var(--tg-theme-button-color, #e91e63);
+    --btn-text: var(--tg-theme-button-text-color, #ffffff);
+    --accent: #e91e63;
+    --accent-glow: rgba(233, 30, 99, 0.25);
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 255, 255, 0.08);
+    --radius: 14px;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+    max-width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ═══════════════════════════
+   PAGES
+   ═══════════════════════════ */
+.page {
+    display: none;
+    padding: 0 16px 24px;
+    animation: fadeSlideIn 0.3s ease forwards;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ═══════════════════════════
+   HEADER
+   ═══════════════════════════ */
+.header {
+    padding: 20px 0 16px;
+    position: relative;
+}
+
+.header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: var(--text-hint);
+    font-weight: 400;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 0;
+    margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.back-btn:active {
+    opacity: 0.6;
+}
+
+/* ═══════════════════════════
+   MENU BUTTONS
+   ═══════════════════════════ */
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    transition: var(--transition);
+    gap: 14px;
+    text-align: left;
+}
+
+.menu-btn:active {
+    transform: scale(0.98);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.menu-icon {
+    font-size: 22px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-glow);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.menu-text {
+    flex: 1;
+}
+
+.menu-arrow {
+    font-size: 20px;
+    color: var(--text-hint);
+    font-weight: 300;
+}
+
+/* ═══════════════════════════
+   ITEM CARD
+   ═══════════════════════════ */
+.item-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+}
+
+.item-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    white-space: pre-line;
+}
+
+.item-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 16px 0;
+}
+
+.item-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-label {
+    font-size: 14px;
+    color: var(--text-hint);
+}
+
+.price-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.item-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.buy-btn {
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.buy-btn:active {
+    transform: scale(0.97);
+}
+
+.coords-buy {
+    background: var(--accent);
+    color: #fff;
+}
+
+.full-buy {
+    background: rgba(233, 30, 99, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(233, 30, 99, 0.3);
+}
+
+.buy-price {
+    font-weight: 700;
+}
+
+/* ═══════════════════════════
+   INFO / SUGGEST CARDS
+   ═══════════════════════════ */
+.info-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.info-row {
+    padding: 4px 0;
+}
+
+.info-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 12px 0;
+}
+
+.contact {
+    margin-top: 8px;
+    color: var(--text-hint);
+}
+
+.template-block {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 14px 0;
+}
+
+.template-line {
+    padding: 4px 0;
+    font-size: 13px;
+}
+
+.copy-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: var(--transition);
+}
+
+.copy-btn:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+}
+
+.copy-btn.copied {
+    background: #4caf50;
+}
+
+/* ═══════════════════════════
+   BUY PAGE
+   ═══════════════════════════ */
+.buy-card {
+    text-align: center;
+}
+
+.buy-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.buy-object {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.buy-total {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 20px;
+}
+
+.buy-instruction {
+    font-size: 14px;
+    color: var(--text-hint);
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.buy-code {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--accent);
+    display: inline-block;
+}
+
+/* ═══════════════════════════
+   CATALOG ITEMS
+   ═══════════════════════════ */
+.catalog-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+    gap: 12px;
+    text-align: left;
+}
+
+.catalog-item:active {
+    transform: scale(0.98);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.catalog-item-icon {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-glow);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.catalog-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.catalog-item-name {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.catalog-item-price {
+    font-size: 12px;
+    color: var(--text-hint);
+}
+
+.catalog-item-arrow {
+    color: var(--text-hint);
+    font-size: 18px;
+}
