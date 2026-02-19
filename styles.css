@@ -283,6 +283,23 @@ body {
     font-size: 13px;
 }
 
+.promo-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.promo-input:focus {
+    border-color: var(--accent);
+}
+
 .copy-btn {
     width: 100%;
     padding: 12px;
