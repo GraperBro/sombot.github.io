@@ -183,17 +183,30 @@ function showItem(item) {
 //  СТРАНИЦА ПОКУПКИ
 // ═══════════════════════════════════════════════════════════════
 
+let currentBuyItem = null;
+let currentBuyType = null;
+let appliedPromo = null;
+
 function showBuyPage(item, type) {
     const isCoords = type === 'coords';
+    currentBuyItem = item;
+    currentBuyType = type;
+    appliedPromo = null; // Сброс при новом открытии
 
     document.getElementById('buy-title').textContent = isCoords
         ? '🗺 Покупка координат'
         : '📋 Покупка полной информации';
     document.getElementById('buy-icon').textContent = isCoords ? '🗺' : '📋';
     document.getElementById('buy-object').textContent = `${item.icon} ${item.name}`;
-    document.getElementById('buy-total').textContent = isCoords
-        ? item.coords_price
-        : item.full_price;
+    
+    // Сброс полей промокода
+    const promoInput = document.getElementById('buy-promo-input');
+    if (promoInput) promoInput.value = '';
+    const promoResult = document.getElementById('buy-promo-result');
+    if (promoResult) promoResult.textContent = '';
+    
+    updateBuyPriceDisplay();
+
     document.getElementById('buy-code').textContent = `Код: ${item.id}_${type}`;
 
     document.getElementById('buy-back-btn').onclick = () => {
@@ -205,6 +218,82 @@ function showBuyPage(item, type) {
     // Тактильная обратная связь
     if (tg.HapticFeedback) {
         tg.HapticFeedback.notificationOccurred('success');
+    }
+}
+
+function updateBuyPriceDisplay() {
+    const isCoords = currentBuyType === 'coords';
+    let basePriceStr = isCoords ? currentBuyItem.coords_price : currentBuyItem.full_price;
+    let basePrice = parseInt(basePriceStr.replace(/\D/g, '')) || 0;
+    
+    let finalPrice = basePrice;
+    
+    if (appliedPromo) {
+        let discountVal = parseInt(appliedPromo.discount.replace(/\D/g, '')) || 0;
+        if (appliedPromo.discount.includes('%')) {
+            finalPrice = finalPrice - (finalPrice * (discountVal / 100));
+        } else {
+            finalPrice = finalPrice - discountVal;
+        }
+        if (finalPrice < 0) finalPrice = 0;
+    }
+    
+    const buyTotalEl = document.getElementById('buy-total');
+    if (appliedPromo) {
+        buyTotalEl.innerHTML = `<s style="font-size: 18px; color: var(--text-hint);">${basePriceStr}</s> ${Math.round(finalPrice)}₽`;
+    } else {
+        buyTotalEl.textContent = basePriceStr;
+    }
+}
+
+function applyBuyPromocode() {
+    const input = document.getElementById('buy-promo-input');
+    const resultDiv = document.getElementById('buy-promo-result');
+    if (!input || !resultDiv) return;
+    
+    const code = input.value.trim().toUpperCase();
+
+    if (!code) {
+        resultDiv.textContent = 'Введите промокод!';
+        resultDiv.style.color = '#ff6b6b';
+        return;
+    }
+
+    if (appliedPromo && appliedPromo.code === code) {
+        resultDiv.textContent = 'Этот промокод уже применён!';
+        resultDiv.style.color = '#ff6b6b';
+        return;
+    }
+
+    const promo = PROMOCODES.find(p => p.code === code);
+
+    if (promo) {
+        if (promo.uses > 0) {
+            promo.uses--; // Уменьшаем количество использований
+            appliedPromo = promo;
+            updateBuyPriceDisplay();
+            
+            resultDiv.textContent = `✅ Скидка ${promo.discount} применена!`;
+            resultDiv.style.color = '#4caf50';
+            
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.notificationOccurred('success');
+            }
+        } else {
+            resultDiv.textContent = '❌ Лимит исчерпан.';
+            resultDiv.style.color = '#ff6b6b';
+            
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.notificationOccurred('error');
+            }
+        }
+    } else {
+        resultDiv.textContent = '❌ Неверный промокод.';
+        resultDiv.style.color = '#ff6b6b';
+        
+        if (tg.HapticFeedback) {
+            tg.HapticFeedback.notificationOccurred('error');
+        }
     }
 }
 
@@ -295,5 +384,35 @@ function checkPromocode() {
 //  ИНИЦИАЛИЗАЦИЯ
 // ═══════════════════════════════════════════════════════════════
 
+function setRandomGreeting() {
+    const greetings = [
+        { text: "Привет сталкер!", weight: 100 },
+        { text: "Привет дигер!", weight: 100 },
+        { text: "Привет Руфер!", weight: 100 },
+        { text: "Привет от Vexo!", weight: 100 },
+        { text: "Привет всем сабам 4к!", weight: 100 },
+        { text: "Привет зацепер!", weight: 100 },
+        { text: "Промокод STALKER2026 (Маленький шанс на него)!", weight: 5 } // Маленький шанс
+    ];
+
+    let totalWeight = greetings.reduce((sum, g) => sum + g.weight, 0);
+    let rand = Math.random() * totalWeight;
+    let selected = greetings[0].text;
+    
+    for (const g of greetings) {
+        if (rand < g.weight) {
+            selected = g.text;
+            break;
+        }
+        rand -= g.weight;
+    }
+    
+    const greetingEl = document.getElementById('main-greeting');
+    if (greetingEl) {
+        greetingEl.textContent = selected;
+    }
+}
+
 // Показать главную страницу
+setRandomGreeting();
 showPage('page-main', false);
