@@ -15,7 +15,7 @@
         <!-- ══════ Главное меню ══════ -->
         <div class="page active" id="page-main">
             <div class="header">
-                <div style="text-align: center; font-size: 16px; font-weight: bold; color: var(--accent); margin-bottom: 10px;">Привет сталкер!</div>
+                <div id="main-greeting" style="text-align: center; font-size: 16px; font-weight: bold; color: var(--accent); margin-bottom: 10px;">Привет сталкер!</div>
                 <h1>🏪 Магазин координат</h1>
                 <p class="subtitle">Выбери раздел</p>
             </div>
@@ -169,8 +169,18 @@
                 <div class="buy-icon" id="buy-icon">🗺</div>
                 <div class="buy-object" id="buy-object"></div>
                 <div class="buy-total" id="buy-total"></div>
+                
+                <div class="buy-promo-block" style="margin-bottom: 20px;">
+                    <p class="subtitle" style="margin-bottom: 8px;">Есть промокод?</p>
+                    <input type="text" id="buy-promo-input" placeholder="Промокод" class="promo-input" style="margin-bottom: 8px; text-align: center;">
+                    <button class="buy-btn coords-buy" onclick="applyBuyPromocode()">
+                        <span style="margin: 0 auto;">Применить</span>
+                    </button>
+                    <div id="buy-promo-result" style="margin-top: 10px; font-weight: bold; font-size: 13px;"></div>
+                </div>
+
                 <div class="buy-instruction">
-                    Для оплаты свяжись с админом:<br>
+                    Для оплаты свяжись с админом (скинь скрин с промокодом):<br>
                     <b>@YA_PIZDATIY_CHEL</b>
                 </div>
                 <div class="buy-code" id="buy-code"></div>
