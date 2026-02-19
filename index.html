@@ -35,9 +35,9 @@
                     <span class="menu-text">Информация</span>
                     <span class="menu-arrow">›</span>
                 </button>
-                <button class="menu-btn" onclick="showPage('page-promocodes')">
-                    <span class="menu-icon">🎁</span>
-                    <span class="menu-text">Промокоды</span>
+                <button class="menu-btn" onclick="showPage('page-tgc')">
+                    <span class="menu-icon">📣</span>
+                    <span class="menu-text">Наш ТГК</span>
                     <span class="menu-arrow">›</span>
                 </button>
             </div>
@@ -143,19 +143,21 @@
             </div>
         </div>
 
-        <!-- ══════ Промокоды ══════ -->
-        <div class="page" id="page-promocodes">
+        <!-- ══════ Наш ТГК ══════ -->
+        <div class="page" id="page-tgc">
             <div class="header">
                 <button class="back-btn" onclick="showPage('page-main')">‹ Назад</button>
-                <h1>🎁 Промокоды</h1>
-                <p class="subtitle">Введи промокод для активации</p>
+                <h1>📣 Наш ТГК</h1>
+                <p class="subtitle">Присоединяйся к нам!</p>
             </div>
-            <div class="info-card">
-                <input type="text" id="promo-input" placeholder="Введите промокод..." class="promo-input">
-                <button class="buy-btn coords-buy" style="margin-top: 10px;" onclick="checkPromocode()">
-                    <span>Активировать</span>
-                </button>
-                <div id="promo-result" style="margin-top: 15px; font-weight: bold; text-align: center;"></div>
+            <div class="info-card" style="text-align: center;">
+                <p style="margin-bottom: 20px;">
+                    Мы очень ценим каждого из вас! Спасибо, что выбираете нас. В нашем Telegram-канале мы публикуем свежие координаты, анонсы и иногда даже раздаем <b>промокоды</b>!
+                </p>
+                <div style="font-size: 50px; margin-bottom: 20px;">🫶</div>
+                <a href="https://t.me/ShofMSC" target="_blank" class="buy-btn coords-buy" style="display: flex; justify-content: center; text-decoration: none;">
+                    Перейти в канал @ShofMSC
+                </a>
             </div>
         </div>
 
