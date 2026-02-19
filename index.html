@@ -15,6 +15,7 @@
         <!-- ══════ Главное меню ══════ -->
         <div class="page active" id="page-main">
             <div class="header">
+                <div style="text-align: center; font-size: 16px; font-weight: bold; color: var(--accent); margin-bottom: 10px;">Привет сталкер!</div>
                 <h1>🏪 Магазин координат</h1>
                 <p class="subtitle">Выбери раздел</p>
             </div>
@@ -32,6 +33,11 @@
                 <button class="menu-btn" onclick="showPage('page-info')">
                     <span class="menu-icon">ℹ️</span>
                     <span class="menu-text">Информация</span>
+                    <span class="menu-arrow">›</span>
+                </button>
+                <button class="menu-btn" onclick="showPage('page-promocodes')">
+                    <span class="menu-icon">🎁</span>
+                    <span class="menu-text">Промокоды</span>
                     <span class="menu-arrow">›</span>
                 </button>
             </div>
@@ -137,6 +143,22 @@
             </div>
         </div>
 
+        <!-- ══════ Промокоды ══════ -->
+        <div class="page" id="page-promocodes">
+            <div class="header">
+                <button class="back-btn" onclick="showPage('page-main')">‹ Назад</button>
+                <h1>🎁 Промокоды</h1>
+                <p class="subtitle">Введи промокод для активации</p>
+            </div>
+            <div class="info-card">
+                <input type="text" id="promo-input" placeholder="Введите промокод..." class="promo-input">
+                <button class="buy-btn coords-buy" style="margin-top: 10px;" onclick="checkPromocode()">
+                    <span>Активировать</span>
+                </button>
+                <div id="promo-result" style="margin-top: 15px; font-weight: bold; text-align: center;"></div>
+            </div>
+        </div>
+
         <!-- ══════ Страница покупки ══════ -->
         <div class="page" id="page-buy">
             <div class="header">
@@ -159,6 +181,5 @@
 
     <script src="script.js"></script>
 </body>
-
 
 </html>
